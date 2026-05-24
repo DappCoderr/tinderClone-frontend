@@ -1,12 +1,12 @@
 import React from 'react';
 import Card from '../ components/card';
 
-const LoginPage = () => {
+const Register = () => {
   return (
     <div>
-      <Card title={'Login'} path={'register'}/>
+      <Card title={'Register'} path={'login'} />
     </div>
   );
 };
 
-export default LoginPage;
+export default Register;
