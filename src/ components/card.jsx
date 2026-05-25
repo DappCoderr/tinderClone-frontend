@@ -1,31 +1,37 @@
 import React, { useState } from 'react';
 import { Lock, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import useUser from '../store/useUser';
+import { dummyUser } from '../data/loginUser';
 
 const Card = ({ title, path }) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const submitHandler = (e) => {
+  const addUser = useUser((state) => state.addUser);
+  const user = useUser((state) => state.user);
+
+  const submitHandler = async (e) => {
     e.preventDefault();
     console.log(userName, password);
+    console.log('Wait of 3 sec, adding user');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    addUser(dummyUser);
+    console.log('User added', user);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
       <div className="card w-full max-w-sm bg-base-100 shadow-2xl">
         <div className="card-body p-8">
-          {/* Heading */}
           <div className="text-center mb-6">
             <h2 className="text-4xl font-bold">{title}</h2>
 
             <p className="text-sm text-base-content/60 mt-2">Welcome back! Please {title} to continue.</p>
           </div>
 
-          {/* Form */}
           <form onSubmit={submitHandler} className="space-y-5">
-            {/* Username */}
             <div>
               <label className="label">
                 <span className="label-text font-medium">Username</span>
@@ -44,7 +50,6 @@ const Card = ({ title, path }) => {
               </label>
             </div>
 
-            {/* Password */}
             <div>
               <label className="label">
                 <span className="label-text font-medium">Password</span>
@@ -63,19 +68,17 @@ const Card = ({ title, path }) => {
               </label>
             </div>
 
-            {/* Button */}
             <button type="submit" className="btn bg-primary-content w-full mt-2">
               Login
             </button>
           </form>
-
-          {/* Footer */}
+          {/* 
           <p className="text-center text-sm mt-6">
             Don&apos;t have an account?{' '}
             <span className="link link-primary font-medium" onClick={() => navigate(`/${path}`)}>
               Register
             </span>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
